@@ -20,8 +20,15 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(Integer id, String name, String description) {
+    public Dish(String name, String description, Integer groupId) {
+        this.groupId = groupId;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Dish(Integer id, Integer groupId, String name, String description) {
         this.id = id;
+        this.groupId = groupId;
         this.name = name;
         this.description = description;
     }
