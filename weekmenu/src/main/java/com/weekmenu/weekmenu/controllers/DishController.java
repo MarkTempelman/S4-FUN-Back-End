@@ -31,7 +31,7 @@ public class DishController {
         }
     }
 
-    //curl -X POST -H "Content-Type: application/json" -d "{\"groupId\":1,\"name\":\"dishName\",\"description\":\"test\"}" http://localhost:8080/dishes -v
+    //curl -X POST -H "Content-Type: application/json" -d "{\"groupId\":1,\"name\":\"dishName2\",\"description\":\"test2\"}" http://localhost:8080/dishes -v
     @PostMapping("/dishes")
     public void Add(@RequestBody Dish dish){
         service.Save(dish);
