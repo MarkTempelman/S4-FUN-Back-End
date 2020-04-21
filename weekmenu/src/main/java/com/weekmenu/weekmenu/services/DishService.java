@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public class DishService {
 
-    @Autowired
-    private DishRepository repo;
+    private final DishRepository repo;
+
+    public DishService(DishRepository repo) {
+        this.repo = repo;
+    }
 
     public List<Dish> listAll() {
         return repo.findAll();
