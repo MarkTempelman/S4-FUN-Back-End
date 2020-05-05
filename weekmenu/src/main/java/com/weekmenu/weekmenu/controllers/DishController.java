@@ -16,12 +16,12 @@ public class DishController {
     @Autowired
     private DishService service;
 
-    @GetMapping("/dishes")
+    @GetMapping("/member/dishes")
     public List<Dish> List(){
         return service.listAll();
     }
 
-    @GetMapping("/dishes/{id}")
+    @GetMapping("/member/dishes/{id}")
     public ResponseEntity<Dish> Get(@PathVariable Integer id) {
         try {
             Dish dish = service.get(id);
@@ -32,13 +32,13 @@ public class DishController {
     }
 
     //curl -X POST -H "Content-Type: application/json" -d "{\"groupId\":1,\"name\":\"dishName2\",\"description\":\"test2\"}" http://localhost:8080/dishes -v
-    @PostMapping("/dishes")
+    @PostMapping("/member/dishes")
     public void Add(@RequestBody Dish dish){
         service.Save(dish);
     }
 
     //curl -X PUT -H "Content-Type: application/json" -d "{\"id\":1,\"groupId\":1,\"name\":\"updatedName\",\"description\":\"updated desc\"}" http://localhost:8080/dishes/1 -v
-    @PutMapping("/dishes/{id}")
+    @PutMapping("/member/dishes/{id}")
     public ResponseEntity Update(@RequestBody Dish dish, @PathVariable Integer id){
         try {
             Dish existDish = service.get(id);
@@ -50,7 +50,7 @@ public class DishController {
     }
 
     //curl -X DELETE http://localhost:8080/dishes/2 -v
-    @DeleteMapping("/dishes/{id}")
+    @DeleteMapping("/member/dishes/{id}")
     public ResponseEntity Delete(@PathVariable Integer id){
         try {
             Dish existDish = service.get(id);

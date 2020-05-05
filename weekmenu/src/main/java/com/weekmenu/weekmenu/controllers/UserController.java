@@ -1,10 +1,13 @@
 package com.weekmenu.weekmenu.controllers;
 
+import com.weekmenu.weekmenu.models.Dish;
 import com.weekmenu.weekmenu.models.User;
 import com.weekmenu.weekmenu.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -15,14 +18,15 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/register")
+    //curl -X POST -H "Content-Type: application/json" -d "{\"username\":\"name\",\"password\":\"password\"}" http://localhost:8080/all/register -v
+    @PostMapping("/all/register")
     public void Register(@RequestBody User user){
         user.setAdmin(false);
         user.setGroupId(null);
         service.Save(user);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/all/login")
     public boolean Login(@RequestBody User user){
 
         if(service.DoesUserExist(user.getUsername())){
@@ -30,5 +34,11 @@ public class UserController {
             return true;
         }
         return false;
+    }
+
+    //temporary
+    @GetMapping("/admin/users")
+    public List<User> List(){
+        return service.listAll();
     }
 }

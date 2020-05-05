@@ -35,7 +35,7 @@ public class User {
         this.userId = userId;
     }
 
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
