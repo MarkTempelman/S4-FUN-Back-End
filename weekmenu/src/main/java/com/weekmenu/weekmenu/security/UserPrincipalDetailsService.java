@@ -1,7 +1,8 @@
-package com.weekmenu.weekmenu;
+package com.weekmenu.weekmenu.security;
 
 import com.weekmenu.weekmenu.interfaces.UserRepository;
 import com.weekmenu.weekmenu.models.User;
+import com.weekmenu.weekmenu.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

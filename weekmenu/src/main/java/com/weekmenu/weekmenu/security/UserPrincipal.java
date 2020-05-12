@@ -1,4 +1,4 @@
-package com.weekmenu.weekmenu;
+package com.weekmenu.weekmenu.security;
 
 import com.weekmenu.weekmenu.models.User;
 import org.springframework.security.core.GrantedAuthority;
