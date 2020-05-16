@@ -16,6 +16,10 @@ public class DishService {
         this.repo = repo;
     }
 
+    public List<Dish> GetDishesByGroupId(Integer id){
+        return this.repo.findDishesByGroupId(id);
+    }
+
     public List<Dish> listAll() {
         return repo.findAll();
     }

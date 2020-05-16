@@ -1,10 +1,14 @@
 package com.weekmenu.weekmenu.controllers;
 
 import com.weekmenu.weekmenu.models.Dish;
+import com.weekmenu.weekmenu.models.User;
 import com.weekmenu.weekmenu.services.DishService;
+import com.weekmenu.weekmenu.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,12 +18,19 @@ import java.util.NoSuchElementException;
 @CrossOrigin
 public class DishController {
 
-    @Autowired
-    private DishService service;
+    private final DishService service;
+    private final UserService userService;
+
+    public DishController(DishService service, UserService userService) {
+        this.service = service;
+        this.userService = userService;
+    }
 
     @GetMapping("/member/dishes")
     public List<Dish> List(){
-        return service.listAll();
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.Get(name);
+        return service.GetDishesByGroupId(user.getGroupId());
     }
 
     @GetMapping("/member/dishes/{id}")
