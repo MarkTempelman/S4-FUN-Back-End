@@ -27,16 +27,6 @@ public class UserController {
         service.Save(user);
     }
 
-    @PostMapping("/all/login")
-    public boolean Login(@RequestBody User user){
-
-        if(service.DoesUserExist(user.getUsername())){
-            //authenticate user
-            return true;
-        }
-        return false;
-    }
-
     //temporary
     @GetMapping("/admin/users")
     public List<User> List(){
