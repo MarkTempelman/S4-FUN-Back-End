@@ -1,5 +1,6 @@
 package com.weekmenu.weekmenu.controllers;
 
+import com.weekmenu.weekmenu.helpers.ControllerHelpers;
 import com.weekmenu.weekmenu.models.Dish;
 import com.weekmenu.weekmenu.models.User;
 import com.weekmenu.weekmenu.services.DishService;
@@ -28,8 +29,7 @@ public class DishController {
 
     @GetMapping("/member/dishes")
     public List<Dish> List(){
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.Get(name);
+        User user = ControllerHelpers.GetCurrentUser(userService);
         return service.GetDishesByGroupId(user.getGroupId());
     }
 

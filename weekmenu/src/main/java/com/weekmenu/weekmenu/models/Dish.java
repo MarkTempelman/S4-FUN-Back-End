@@ -2,11 +2,19 @@ package com.weekmenu.weekmenu.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="dish")
+@NaturalIdCache
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Dish {
 
     @Id
@@ -15,10 +23,18 @@ public class Dish {
     private Integer id;
     @Column(name="group_id")
     private Integer groupId;
+    @NaturalId
     @Column(name="dish_name")
     private String name;
     @Column(name="dish_description")
     private String description;
+
+    @OneToMany(
+            mappedBy = "dish",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<WeekmenuDish> weekmenuDishList = new ArrayList<>();
 
     public Dish() {
     }
@@ -66,5 +82,28 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<WeekmenuDish> getWeekmenuDishList() {
+        return weekmenuDishList;
+    }
+
+    public void setWeekmenuDishList(List<WeekmenuDish> weekmenuDishList) {
+        this.weekmenuDishList = weekmenuDishList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Dish dish = (Dish) obj;
+        return Objects.equals(name, dish.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
