@@ -29,13 +29,6 @@ public class Dish {
     @Column(name="dish_description")
     private String description;
 
-    @OneToMany(
-            mappedBy = "dish",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<WeekmenuDish> weekmenuDishList = new ArrayList<>();
-
     public Dish() {
     }
 
@@ -82,14 +75,6 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<WeekmenuDish> getWeekmenuDishList() {
-        return weekmenuDishList;
-    }
-
-    public void setWeekmenuDishList(List<WeekmenuDish> weekmenuDishList) {
-        this.weekmenuDishList = weekmenuDishList;
     }
 
     @Override

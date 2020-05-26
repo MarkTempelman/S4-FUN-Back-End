@@ -67,7 +67,6 @@ public class Weekmenu {
     public void addDish(Dish dish){
         WeekmenuDish weekmenuDish = new WeekmenuDish(this, dish);
         weekmenuDishList.add(weekmenuDish);
-        dish.getWeekmenuDishList().add(weekmenuDish);
     }
 
     public void removeDish(Dish dish){
@@ -77,7 +76,6 @@ public class Weekmenu {
 
             if(weekmenuDish.getWeekmenu().equals(this) && weekmenuDish.getDish().equals(dish)) {
                 iterator.remove();
-                weekmenuDish.getDish().getWeekmenuDishList().remove(weekmenuDish);
                 weekmenuDish.setWeekmenu(null);
                 weekmenuDish.setDish(null);
             }
