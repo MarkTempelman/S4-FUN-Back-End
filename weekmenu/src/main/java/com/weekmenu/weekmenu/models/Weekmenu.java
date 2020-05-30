@@ -2,6 +2,8 @@ package com.weekmenu.weekmenu.models;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "weekmenu")
@@ -20,16 +22,17 @@ public class Weekmenu {
 
     @OneToMany(
             mappedBy = "weekmenu",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
-    private List<WeekmenuDish> weekmenuDishList = new ArrayList<>();
+    private Set<WeekmenuDish> weekmenuDishList;
 
     public Weekmenu(){}
 
-    public Weekmenu(Integer groupId, Date startDate) {
+    public Weekmenu(Integer groupId, Date startDate, WeekmenuDish... weekmenuDishes) {
         this.groupId = groupId;
         this.startDate = startDate;
+        for(WeekmenuDish weekmenuDish: weekmenuDishes) weekmenuDish.setWeekmenu(this);
+        this.weekmenuDishList = Stream.of(weekmenuDishes).collect(Collectors.toSet());
     }
 
     public Integer getId() {
@@ -56,11 +59,11 @@ public class Weekmenu {
         this.startDate = startDate;
     }
 
-    public List<WeekmenuDish> getWeekmenuDishList() {
+    public Set<WeekmenuDish> getWeekmenuDishList() {
         return weekmenuDishList;
     }
 
-    public void setWeekmenuDishList(List<WeekmenuDish> weekmenuDishList) {
+    public void setWeekmenuDishList(Set<WeekmenuDish> weekmenuDishList) {
         this.weekmenuDishList = weekmenuDishList;
     }
 
@@ -80,22 +83,5 @@ public class Weekmenu {
                 weekmenuDish.setDish(null);
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-
-        Weekmenu that = (Weekmenu) obj;
-        return Objects.equals(groupId, that.getGroupId()) &&
-                Objects.equals(startDate, that.getStartDate());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupId, startDate);
     }
 }

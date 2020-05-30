@@ -1,24 +1,23 @@
 package com.weekmenu.weekmenu.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name ="weekmenu_dish")
-public class WeekmenuDish {
 
-    @EmbeddedId
-    private WeekmenuDishId id;
+public class WeekmenuDish implements Serializable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("menuId")
+    @Id
+    @ManyToOne
+    @JoinColumn
     private Weekmenu weekmenu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("dishId")
+    @Id
+    @ManyToOne
+    @JoinColumn
     private Dish dish;
 
-    @Column(name = "day")
     private Integer day;
 
     public WeekmenuDish(){
@@ -28,15 +27,6 @@ public class WeekmenuDish {
     public WeekmenuDish(Weekmenu weekmenu, Dish dish){
         this.weekmenu = weekmenu;
         this.dish = dish;
-        this.id = new WeekmenuDishId(weekmenu.getId(), dish.getId());
-    }
-
-    public WeekmenuDishId getId() {
-        return id;
-    }
-
-    public void setId(WeekmenuDishId id) {
-        this.id = id;
     }
 
     public Weekmenu getWeekmenu() {
@@ -64,19 +54,17 @@ public class WeekmenuDish {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-
-        WeekmenuDish that = (WeekmenuDish) obj;
-        return Objects.equals(weekmenu, that.weekmenu) &&
-                Objects.equals(dish, that.dish);
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(!(o instanceof WeekmenuDish)) return false;
+        WeekmenuDish that = (WeekmenuDish) o;
+        return Objects.equals(weekmenu.getId(), that.weekmenu.getId()) &&
+                Objects.equals(dish.getId(), that.dish.getId()) &&
+                Objects.equals(day, that.day);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(weekmenu, dish);
+    public int hashCode(){
+        return Objects.hash(weekmenu.getId(), dish.getId(), day);
     }
 }

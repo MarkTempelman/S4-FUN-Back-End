@@ -8,15 +8,13 @@ import java.util.Objects;
 @Embeddable
 public class WeekmenuDishId implements Serializable {
 
-    @Column(name="menu_id")
     private Integer menuId;
-
-    @Column(name="dish_id")
     private Integer dishId;
 
-    protected WeekmenuDishId() {}
+    public WeekmenuDishId() {}
 
     public WeekmenuDishId(Integer menuId, Integer dishId){
+        super();
         this.dishId = dishId;
         this.menuId = menuId;
     }
