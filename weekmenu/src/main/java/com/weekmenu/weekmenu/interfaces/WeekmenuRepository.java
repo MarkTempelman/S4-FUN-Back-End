@@ -4,8 +4,9 @@ import com.weekmenu.weekmenu.models.Dish;
 import com.weekmenu.weekmenu.models.Weekmenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface WeekmenuRepository extends JpaRepository<Weekmenu, Integer> {
-    List<Weekmenu> findWeekmenusByGroupId(Integer GroupId);
+    List<Weekmenu> findWeekmenusByGroupIdAndStartDate(Integer groupId, Date startDate);
 }

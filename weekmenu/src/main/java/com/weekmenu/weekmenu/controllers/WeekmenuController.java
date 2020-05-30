@@ -27,6 +27,6 @@ public class WeekmenuController {
     @GetMapping("/all")
     public List<Weekmenu> GetWeekmenus() {
         User user = ControllerHelpers.GetCurrentUser(userService);
-        return weekmenuService.getWeekmenuByGroupId(user.getGroupId());
+        return weekmenuService.getCurrentWeekmenuByGroupId(user.getGroupId());
     }
 }
