@@ -1,16 +1,26 @@
 package com.weekmenu.weekmenu.models;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-
+@Table(name = "weekmenu_dish")
 public class WeekmenuDish implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumn
+    @EmbeddedId
+    private WeekmenuDishId id = new WeekmenuDishId();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("menuId")
+    @JoinColumn(name = "menu_id")
+    private Weekmenu weekmenu;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("dishId")
+    @JoinColumn(name = "dish_id")
     private Dish dish;
 
     private Integer day;
@@ -21,6 +31,14 @@ public class WeekmenuDish implements Serializable {
 
     public WeekmenuDish(Dish dish){
         this.dish = dish;
+    }
+
+//    public Weekmenu getWeekmenu() {
+//        return weekmenu;
+//    }
+
+    public void setWeekmenu(Weekmenu weekmenu) {
+        this.weekmenu = weekmenu;
     }
 
     public Dish getDish() {

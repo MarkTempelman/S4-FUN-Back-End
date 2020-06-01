@@ -19,6 +19,14 @@ public class WeekmenuDishId implements Serializable {
         this.menuId = menuId;
     }
 
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
+    }
+
+    public void setDishId(Integer dishId) {
+        this.dishId = dishId;
+    }
+
     public Integer getDishId() {
         return dishId;
     }

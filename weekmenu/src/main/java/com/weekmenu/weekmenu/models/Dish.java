@@ -1,7 +1,9 @@
 package com.weekmenu.weekmenu.models;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name="dish")
@@ -28,6 +31,9 @@ public class Dish {
     private String name;
     @Column(name="dish_description")
     private String description;
+
+    @OneToMany(mappedBy = "weekmenu")
+    private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
     public Dish() {
     }
