@@ -20,7 +20,7 @@ public class WeekmenuService {
         repo = repository;
     }
 
-    public Weekmenu getCurrentWeekmenuByGroupId(Integer id){
+    public List<Weekmenu> getCurrentWeekmenuByGroupId(Integer id){
         LocalDate monday = LocalDate.now();
         monday = monday.with(DayOfWeek.MONDAY);
         Date date = java.sql.Date.valueOf(monday);

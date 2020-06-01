@@ -24,14 +24,14 @@ public class Weekmenu {
             mappedBy = "dish",
             cascade = CascadeType.ALL
     )
-    private Set<WeekmenuDish> weekmenuDishList;
+    private List<WeekmenuDish> weekmenuDishList = new ArrayList<WeekmenuDish>();
 
     public Weekmenu(){}
 
-    public Weekmenu(Integer groupId, Date startDate, WeekmenuDish... weekmenuDishes) {
+    public Weekmenu(Integer groupId, Date startDate, List<WeekmenuDish> weekmenuDishes) {
         this.groupId = groupId;
         this.startDate = startDate;
-        this.weekmenuDishList = Stream.of(weekmenuDishes).collect(Collectors.toSet());
+        this.weekmenuDishList = weekmenuDishes;
     }
 
     public Integer getId() {
@@ -58,11 +58,11 @@ public class Weekmenu {
         this.startDate = startDate;
     }
 
-    public Set<WeekmenuDish> getWeekmenuDishList() {
+    public List<WeekmenuDish> getWeekmenuDishList() {
         return weekmenuDishList;
     }
 
-    public void setWeekmenuDishList(Set<WeekmenuDish> weekmenuDishList) {
+    public void setWeekmenuDishList(List<WeekmenuDish> weekmenuDishList) {
         this.weekmenuDishList = weekmenuDishList;
     }
 

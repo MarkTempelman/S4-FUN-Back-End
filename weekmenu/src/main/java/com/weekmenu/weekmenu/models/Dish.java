@@ -84,11 +84,12 @@ public class Dish {
         if (obj == null || getClass() != obj.getClass()) return false;
 
         Dish dish = (Dish) obj;
-        return Objects.equals(name, dish.name);
+        return Objects.equals(name, dish.getName()) &&
+                Objects.equals(id, dish.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, id);
     }
 }
