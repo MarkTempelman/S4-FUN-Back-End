@@ -21,7 +21,7 @@ public class Weekmenu {
     private Date startDate = new Date();
 
     @OneToMany(
-            mappedBy = "weekmenu",
+            mappedBy = "dish",
             cascade = CascadeType.ALL
     )
     private Set<WeekmenuDish> weekmenuDishList;
@@ -31,7 +31,6 @@ public class Weekmenu {
     public Weekmenu(Integer groupId, Date startDate, WeekmenuDish... weekmenuDishes) {
         this.groupId = groupId;
         this.startDate = startDate;
-        for(WeekmenuDish weekmenuDish: weekmenuDishes) weekmenuDish.setWeekmenu(this);
         this.weekmenuDishList = Stream.of(weekmenuDishes).collect(Collectors.toSet());
     }
 
@@ -68,7 +67,7 @@ public class Weekmenu {
     }
 
     public void addDish(Dish dish){
-        WeekmenuDish weekmenuDish = new WeekmenuDish(this, dish);
+        WeekmenuDish weekmenuDish = new WeekmenuDish(dish);
         weekmenuDishList.add(weekmenuDish);
     }
 
@@ -77,9 +76,8 @@ public class Weekmenu {
             iterator.hasNext(); ) {
             WeekmenuDish weekmenuDish = iterator.next();
 
-            if(weekmenuDish.getWeekmenu().equals(this) && weekmenuDish.getDish().equals(dish)) {
+            if(weekmenuDish.getDish().equals(dish)) {
                 iterator.remove();
-                weekmenuDish.setWeekmenu(null);
                 weekmenuDish.setDish(null);
             }
         }

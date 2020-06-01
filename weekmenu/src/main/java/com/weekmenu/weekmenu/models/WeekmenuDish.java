@@ -11,11 +11,6 @@ public class WeekmenuDish implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn
-    private Weekmenu weekmenu;
-
-    @Id
-    @ManyToOne
-    @JoinColumn
     private Dish dish;
 
     private Integer day;
@@ -24,17 +19,8 @@ public class WeekmenuDish implements Serializable {
 
     }
 
-    public WeekmenuDish(Weekmenu weekmenu, Dish dish){
-        this.weekmenu = weekmenu;
+    public WeekmenuDish(Dish dish){
         this.dish = dish;
-    }
-
-    public Weekmenu getWeekmenu() {
-        return weekmenu;
-    }
-
-    public void setWeekmenu(Weekmenu weekmenu) {
-        this.weekmenu = weekmenu;
     }
 
     public Dish getDish() {
@@ -58,13 +44,12 @@ public class WeekmenuDish implements Serializable {
         if(this == o) return true;
         if(!(o instanceof WeekmenuDish)) return false;
         WeekmenuDish that = (WeekmenuDish) o;
-        return Objects.equals(weekmenu.getId(), that.weekmenu.getId()) &&
-                Objects.equals(dish.getId(), that.dish.getId()) &&
+        return Objects.equals(dish.getId(), that.dish.getId()) &&
                 Objects.equals(day, that.day);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(weekmenu.getId(), dish.getId(), day);
+        return Objects.hash(dish.getId(), day);
     }
 }

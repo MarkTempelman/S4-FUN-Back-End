@@ -8,5 +8,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface WeekmenuRepository extends JpaRepository<Weekmenu, Integer> {
-    List<Weekmenu> findWeekmenusByGroupIdAndStartDate(Integer groupId, Date startDate);
+    Weekmenu findWeekmenusByGroupIdAndStartDate(Integer groupId, Date startDate);
 }
