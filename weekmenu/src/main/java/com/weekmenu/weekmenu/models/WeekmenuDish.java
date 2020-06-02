@@ -33,6 +33,7 @@ public class WeekmenuDish implements Serializable {
         this.dish = dish;
     }
 
+//    @JsonIgnore
 //    public Weekmenu getWeekmenu() {
 //        return weekmenu;
 //    }

@@ -32,7 +32,7 @@ public class Dish {
     @Column(name="dish_description")
     private String description;
 
-    @OneToMany(mappedBy = "weekmenu")
+    @OneToMany(mappedBy = "dish")
     private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
     public Dish() {
@@ -83,19 +83,19 @@ public class Dish {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Dish dish = (Dish) obj;
-        return Objects.equals(name, dish.getName()) &&
-                Objects.equals(id, dish.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, id);
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//
+//        Dish dish = (Dish) obj;
+//        return Objects.equals(name, dish.getName()) &&
+//                Objects.equals(id, dish.getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(name, id);
+//    }
 }

@@ -23,7 +23,7 @@ public class Weekmenu {
     @Column(name = "weekmenu_start_date")
     private Date startDate = new Date();
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "weekmenu")
     private Set<WeekmenuDish> weekmenuDishList = new HashSet<>();
 
     public Weekmenu(){}
@@ -66,20 +66,20 @@ public class Weekmenu {
         this.weekmenuDishList = weekmenuDishList;
     }
 
-//    public void addDish(Dish dish){
-//        WeekmenuDish weekmenuDish = new WeekmenuDish(dish);
-//        weekmenuDishList.add(weekmenuDish);
-//    }
-//
-//    public void removeDish(Dish dish){
-//        for(Iterator<WeekmenuDish> iterator = weekmenuDishList.iterator();
-//            iterator.hasNext(); ) {
-//            WeekmenuDish weekmenuDish = iterator.next();
-//
-//            if(weekmenuDish.getDish().equals(dish)) {
-//                iterator.remove();
-//                weekmenuDish.setDish(null);
-//            }
-//        }
-//    }
+    public void addDish(Dish dish){
+        WeekmenuDish weekmenuDish = new WeekmenuDish(dish);
+        weekmenuDishList.add(weekmenuDish);
+    }
+
+    public void removeDish(Dish dish){
+        for(Iterator<WeekmenuDish> iterator = weekmenuDishList.iterator();
+            iterator.hasNext(); ) {
+            WeekmenuDish weekmenuDish = iterator.next();
+
+            if(weekmenuDish.getDish().equals(dish)) {
+                iterator.remove();
+                weekmenuDish.setDish(null);
+            }
+        }
+    }
 }
