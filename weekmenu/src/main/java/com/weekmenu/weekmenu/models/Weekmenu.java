@@ -1,12 +1,7 @@
 package com.weekmenu.weekmenu.models;
 
-import com.fasterxml.jackson.annotation.*;
-import net.minidev.json.annotate.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Table(name = "weekmenu")
@@ -24,14 +19,14 @@ public class Weekmenu {
     private Date startDate = new Date();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "weekmenu")
-    private Set<WeekmenuDish> weekmenuDishList = new HashSet<>();
+    private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
     public Weekmenu(){}
 
     public Weekmenu(Integer groupId, Date startDate, Set<WeekmenuDish> weekmenuDishes) {
         this.groupId = groupId;
         this.startDate = startDate;
-        this.weekmenuDishList = weekmenuDishes;
+        this.weekmenuDishes = weekmenuDishes;
     }
 
     public Integer getId() {
@@ -58,21 +53,21 @@ public class Weekmenu {
         this.startDate = startDate;
     }
 
-    public Set<WeekmenuDish> getWeekmenuDishList() {
-        return weekmenuDishList;
+    public Set<WeekmenuDish> getWeekmenuDishes() {
+        return weekmenuDishes;
     }
 
-    public void setWeekmenuDishList(Set<WeekmenuDish> weekmenuDishList) {
-        this.weekmenuDishList = weekmenuDishList;
+    public void setWeekmenuDishes(Set<WeekmenuDish> weekmenuDishList) {
+        this.weekmenuDishes = weekmenuDishList;
     }
 
     public void addDish(Dish dish){
         WeekmenuDish weekmenuDish = new WeekmenuDish(dish);
-        weekmenuDishList.add(weekmenuDish);
+        weekmenuDishes.add(weekmenuDish);
     }
 
     public void removeDish(Dish dish){
-        for(Iterator<WeekmenuDish> iterator = weekmenuDishList.iterator();
+        for(Iterator<WeekmenuDish> iterator = weekmenuDishes.iterator();
             iterator.hasNext(); ) {
             WeekmenuDish weekmenuDish = iterator.next();
 
