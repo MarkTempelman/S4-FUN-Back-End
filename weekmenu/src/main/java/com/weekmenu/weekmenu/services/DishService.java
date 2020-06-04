@@ -12,6 +12,7 @@ public class DishService {
 
     private final DishRepository repo;
 
+    @Autowired
     public DishService(DishRepository repo) {
         this.repo = repo;
     }

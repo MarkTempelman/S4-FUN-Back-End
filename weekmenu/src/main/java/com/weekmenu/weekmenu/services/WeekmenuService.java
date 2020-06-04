@@ -2,6 +2,7 @@ package com.weekmenu.weekmenu.services;
 
 import com.weekmenu.weekmenu.interfaces.WeekmenuRepository;
 import com.weekmenu.weekmenu.models.Weekmenu;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -16,6 +17,7 @@ import java.util.List;
 public class WeekmenuService {
     private final WeekmenuRepository repo;
 
+    @Autowired
     public WeekmenuService(WeekmenuRepository repository){
         repo = repository;
     }

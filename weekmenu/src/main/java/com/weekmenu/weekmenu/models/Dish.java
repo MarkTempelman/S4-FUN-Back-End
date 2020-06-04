@@ -32,8 +32,15 @@ public class Dish {
     @Column(name="dish_description")
     private String description;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dish")
     private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name="tag_dish",
+        joinColumns = {@JoinColumn(name = "dish_id")},
+        inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    private List<Tag> tags = new ArrayList<Tag>();
 
     public Dish() {
     }

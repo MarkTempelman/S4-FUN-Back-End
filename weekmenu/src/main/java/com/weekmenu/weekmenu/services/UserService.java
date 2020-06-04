@@ -2,6 +2,7 @@ package com.weekmenu.weekmenu.services;
 
 import com.weekmenu.weekmenu.interfaces.UserRepository;
 import com.weekmenu.weekmenu.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class UserService {
     private final UserRepository repo;
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserService(UserRepository repo, PasswordEncoder passwordEncoder) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
