@@ -27,9 +27,8 @@ public class UserController {
         service.Save(user);
     }
 
-    //temporary
-    @GetMapping("/admin/users")
-    public List<User> List(){
-        return service.listAll();
+    @GetMapping("/admin/is-admin")
+    public boolean isUserAdmin(){
+        return true;
     }
 }
