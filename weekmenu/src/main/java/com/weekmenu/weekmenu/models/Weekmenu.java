@@ -23,6 +23,11 @@ public class Weekmenu {
 
     public Weekmenu(){}
 
+    public Weekmenu(Integer groupId, Date startDate) {
+        this.groupId = groupId;
+        this.startDate = startDate;
+    }
+
     public Weekmenu(Integer groupId, Date startDate, Set<WeekmenuDish> weekmenuDishes) {
         this.groupId = groupId;
         this.startDate = startDate;

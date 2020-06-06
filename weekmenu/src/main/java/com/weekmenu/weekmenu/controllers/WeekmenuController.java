@@ -39,7 +39,6 @@ public class WeekmenuController {
 
     @PostMapping("/admin/weekmenu/create")
     public void GenerateWeekmenu(@RequestBody WeekmenuRequirements weekmenuRequirements){
-        System.out.println("requirements received");
         weekmenuService.SaveWeekmenu(weekmenuService.GenerateWeekmenu(
                 weekmenuRequirements,
                 dishService.GetDishesByGroupId(ControllerHelpers.GetCurrentGroupId(userService))

@@ -4,13 +4,8 @@ import com.weekmenu.weekmenu.helpers.ServiceHelpers;
 import com.weekmenu.weekmenu.interfaces.WeekmenuRepository;
 import com.weekmenu.weekmenu.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
-import org.springframework.cglib.core.Predicate;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,14 +25,9 @@ public class WeekmenuService {
     }
 
     public Weekmenu GenerateWeekmenu(WeekmenuRequirements requirements, List<Dish> dishes){
-        Weekmenu weekmenu = new Weekmenu();
+        Weekmenu weekmenu = new Weekmenu(dishes.get(0).getGroupId(), getNextMonday());
         Set<Dish> weekmenuDishes = new HashSet<>();
         final Dish[] dish = new Dish[1];
-        List<Dish> dishList;
-
-        weekmenu.setStartDate(getNextMonday());
-
-        weekmenu.setGroupId(dishes.get(0).getGroupId());
 
         requirements.getTags().forEach((tagAmount)->{
                     for (int i = 0; i < tagAmount.getAmount(); i++){
@@ -46,19 +36,15 @@ public class WeekmenuService {
                         dishes.remove(dish[0]);
                     }
                 });
-        dishList = new ArrayList<Dish>(weekmenuDishes);
-        for(int i = 1; i <= 7; i++){
-            weekmenu.addWeekmenuDish(new WeekmenuDish(weekmenu, dishList.get(i - 1), i));
-        }
 
-        return weekmenu;
+        return addDishesToWeekmenu(weekmenu, weekmenuDishes);
     }
 
     public void SaveWeekmenu(Weekmenu weekmenu){
         repo.save(weekmenu);
     }
 
-    private Dish getRandomDishFromDishes(Collection dishes){
+    private Dish getRandomDishFromDishes(Collection<Dish> dishes){
         Random random = new Random();
         List<Dish> dishList = (List <Dish>) dishes;
         return dishList.get(random.nextInt(dishes.size()));
@@ -72,10 +58,13 @@ public class WeekmenuService {
         return dishes.stream().filter(dish -> dish.getTags().contains(tag)).collect(Collectors.toList());
     }
 
-//    CollectionUtils.filter(dishes, new Predicate() {
-//        @Override
-//        public boolean evaluate(Object o) {
-//            return ((Dish) o).getTags().contains(tag);
-//        }
-//    })
+    private Weekmenu addDishesToWeekmenu(Weekmenu weekmenu, Set<Dish> weekmenuDishes){
+        List<Dish> dishList;
+        dishList = new ArrayList<>(weekmenuDishes);
+
+        for(int i = 1; i <= 7; i++){
+            weekmenu.addWeekmenuDish(new WeekmenuDish(weekmenu, dishList.get(i - 1), i));
+        }
+        return weekmenu;
+    }
 }

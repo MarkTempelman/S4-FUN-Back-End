@@ -21,9 +21,8 @@ public class ControllerHelpers {
 
     public static Set<WeekmenuDish> sortWeekmenuDishesByDay(Set<WeekmenuDish> unsorted){
         Comparator<WeekmenuDish> compareByDay = Comparator.comparing(WeekmenuDish::getDay);
-        List<WeekmenuDish> unsortedList = new ArrayList<WeekmenuDish>(unsorted);
+        List<WeekmenuDish> unsortedList = new ArrayList<>(unsorted);
         unsortedList.sort(compareByDay);
-        Set<WeekmenuDish> sortedSet = new LinkedHashSet<>(unsortedList);
-        return sortedSet;
+        return new LinkedHashSet<>(unsortedList);
     }
 }

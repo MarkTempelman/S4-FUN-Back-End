@@ -24,7 +24,6 @@ public class TagController {
 
     @GetMapping("/admin/tags")
     public List<Tag> getTags(){
-        User user = ControllerHelpers.GetCurrentUser(userService);
-        return tagService.getTagsByGroupId(user.getGroupId());
+        return tagService.getTagsByGroupId(ControllerHelpers.GetCurrentGroupId(userService));
     }
 }
