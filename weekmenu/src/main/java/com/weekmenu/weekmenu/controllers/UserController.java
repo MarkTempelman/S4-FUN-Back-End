@@ -1,5 +1,6 @@
 package com.weekmenu.weekmenu.controllers;
 
+import com.weekmenu.weekmenu.helpers.ControllerHelpers;
 import com.weekmenu.weekmenu.models.Dish;
 import com.weekmenu.weekmenu.models.User;
 import com.weekmenu.weekmenu.services.UserService;
@@ -23,12 +24,13 @@ public class UserController {
     @PostMapping("/all/register")
     public void Register(@RequestBody User user){
         user.setAdmin(false);
-        user.setGroupId(null);
+        user.setGroupId(1);
         service.Save(user);
     }
 
-    @GetMapping("/admin/is-admin")
+    @GetMapping("/member/is-admin")
     public boolean isUserAdmin(){
-        return true;
+        User user = ControllerHelpers.GetCurrentUser(service);
+        return user.getAdmin();
     }
 }

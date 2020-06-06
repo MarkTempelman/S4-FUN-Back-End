@@ -18,7 +18,7 @@ public class Weekmenu {
     @Column(name = "weekmenu_start_date")
     private Date startDate = new Date();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "weekmenu")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "weekmenu", cascade = CascadeType.ALL)
     private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
     public Weekmenu(){}
@@ -61,8 +61,7 @@ public class Weekmenu {
         this.weekmenuDishes = weekmenuDishList;
     }
 
-    public void addDish(Dish dish){
-        WeekmenuDish weekmenuDish = new WeekmenuDish(dish);
+    public void addWeekmenuDish(WeekmenuDish weekmenuDish){
         weekmenuDishes.add(weekmenuDish);
     }
 

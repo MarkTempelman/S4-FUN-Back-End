@@ -35,12 +35,13 @@ public class Dish {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "dish")
     private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name="tag_dish",
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+        name="tag_dish",
         joinColumns = {@JoinColumn(name = "dish_id")},
         inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
-    private List<Tag> tags = new ArrayList<Tag>();
+    private Set<Tag> tags = new HashSet<>();
 
     public Dish() {
     }
@@ -56,6 +57,14 @@ public class Dish {
         this.groupId = groupId;
         this.name = name;
         this.description = description;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public Integer getId() {
@@ -90,19 +99,19 @@ public class Dish {
         this.description = description;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) return true;
-//
-//        if (obj == null || getClass() != obj.getClass()) return false;
-//
-//        Dish dish = (Dish) obj;
-//        return Objects.equals(name, dish.getName()) &&
-//                Objects.equals(id, dish.getId());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, id);
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Dish dish = (Dish) obj;
+        return Objects.equals(name, dish.getName()) &&
+                Objects.equals(id, dish.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id);
+    }
 }

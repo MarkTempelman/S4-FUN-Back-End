@@ -1,8 +1,7 @@
 package com.weekmenu.weekmenu.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="tag")
@@ -20,7 +19,7 @@ public class Tag {
     private String tagName;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tags")
-    private List<Dish> dishes = new ArrayList<Dish>();
+    private Set<Dish> dishes = new HashSet<>();
 
     public Tag(){
 
@@ -54,5 +53,20 @@ public class Tag {
 
     public void setTagName(String tagName) {
         this.tagName = tagName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Tag tag = (Tag) obj;
+        return Objects.equals(id, tag.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
