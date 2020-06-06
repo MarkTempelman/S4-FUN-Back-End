@@ -50,15 +50,15 @@ public class WeekmenuService {
         return dishList.get(random.nextInt(dishes.size()));
     }
 
-    private Date getNextMonday(){
+    public Date getNextMonday(){
         return ServiceHelpers.getMondayFromLocalDate(LocalDate.now().plusDays(7));
     }
 
-    private List<Dish> getDishesByTag(List<Dish> dishes, Tag tag){
+    public List<Dish> getDishesByTag(List<Dish> dishes, Tag tag){
         return dishes.stream().filter(dish -> dish.getTags().contains(tag)).collect(Collectors.toList());
     }
 
-    private Weekmenu addDishesToWeekmenu(Weekmenu weekmenu, Set<Dish> weekmenuDishes){
+    public Weekmenu addDishesToWeekmenu(Weekmenu weekmenu, Set<Dish> weekmenuDishes){
         List<Dish> dishList;
         dishList = new ArrayList<>(weekmenuDishes);
 
