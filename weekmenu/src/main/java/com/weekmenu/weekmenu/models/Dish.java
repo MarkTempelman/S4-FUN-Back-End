@@ -43,6 +43,9 @@ public class Dish {
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dish", cascade = CascadeType.ALL)
+    private Set<DishIngredient> ingredients = new HashSet<>();
+
     public Dish() {
     }
 

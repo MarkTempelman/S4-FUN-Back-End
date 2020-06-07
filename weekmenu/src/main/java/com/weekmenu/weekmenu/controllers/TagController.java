@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/admin/")
 public class TagController {
     private final TagService tagService;
     private final UserService userService;
@@ -22,12 +23,12 @@ public class TagController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin/tags")
+    @GetMapping("tags")
     public List<Tag> getTags(){
         return tagService.getTagsByGroupId(ControllerHelpers.GetCurrentGroupId(userService));
     }
 
-    @PostMapping("/admin/tags/create")
+    @PostMapping("tags/create")
     public ResponseEntity createTag(@RequestBody Tag tag){
         if(!tagService.doesTagExist(tag.getTagName())){
             tag.setGroupId(ControllerHelpers.GetCurrentGroupId(userService));
