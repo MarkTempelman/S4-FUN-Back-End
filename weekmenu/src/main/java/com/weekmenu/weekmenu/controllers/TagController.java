@@ -5,9 +5,9 @@ import com.weekmenu.weekmenu.models.Tag;
 import com.weekmenu.weekmenu.models.User;
 import com.weekmenu.weekmenu.services.TagService;
 import com.weekmenu.weekmenu.services.UserService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +25,15 @@ public class TagController {
     @GetMapping("/admin/tags")
     public List<Tag> getTags(){
         return tagService.getTagsByGroupId(ControllerHelpers.GetCurrentGroupId(userService));
+    }
+
+    @PostMapping("/admin/tags/create")
+    public ResponseEntity createTag(@RequestBody Tag tag){
+        if(!tagService.doesTagExist(tag.getTagName())){
+            tag.setGroupId(ControllerHelpers.GetCurrentGroupId(userService));
+            tagService.saveTag(tag);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

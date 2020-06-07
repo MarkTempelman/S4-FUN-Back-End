@@ -23,4 +23,12 @@ public class TagService {
     public List<Tag> getTagsByGroupId(Integer id){
         return tagRepository.findTagsByGroupId(id);
     }
+
+    public boolean doesTagExist(String tagName){
+        return tagRepository.existsTagByTagName(tagName);
+    }
+
+    public void saveTag(Tag tag){
+        tagRepository.save(tag);
+    }
 }

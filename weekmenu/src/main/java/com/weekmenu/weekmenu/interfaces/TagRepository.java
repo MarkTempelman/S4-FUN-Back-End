@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Integer> {
 
-    public List<Tag> findTagsByGroupId(Integer groupId);
+    List<Tag> findTagsByGroupId(Integer groupId);
+
+    boolean existsTagByTagName (String tagName);
 }
