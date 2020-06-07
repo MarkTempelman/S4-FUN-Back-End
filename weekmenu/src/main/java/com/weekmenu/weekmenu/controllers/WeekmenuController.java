@@ -29,18 +29,19 @@ public class WeekmenuController {
     }
 
     @GetMapping("/member/weekmenu/current")
-    public List<Weekmenu> GetWeekmenu() {
+    public List<Weekmenu> getWeekmenu() {
         List<Weekmenu> weekmenus = weekmenuService.getCurrentWeekmenusByGroupId(ControllerHelpers.GetCurrentGroupId(userService));
-        weekmenus.forEach(weekmenu -> {
-            Set<WeekmenuDish> weekmenuDishes = weekmenu.getWeekmenuDishes();
-            weekmenuDishes = ControllerHelpers.sortWeekmenuDishesByDay(weekmenuDishes);
-            weekmenu.setWeekmenuDishes(weekmenuDishes);
-        });
-        return weekmenus;
+        return ControllerHelpers.sortDishesInWeekmenus(weekmenus);
+    }
+
+    @GetMapping("/member/weekmenu/next")
+    public List<Weekmenu> getNextWeekmenu() {
+        List<Weekmenu> weekmenus = weekmenuService.getNextWeekmenusByGroupId(ControllerHelpers.GetCurrentGroupId(userService));
+        return ControllerHelpers.sortDishesInWeekmenus(weekmenus);
     }
 
     @PostMapping("/admin/weekmenu/create")
-    public ResponseEntity GenerateWeekmenu(@RequestBody WeekmenuRequirements weekmenuRequirements){
+    public ResponseEntity generateWeekmenu(@RequestBody WeekmenuRequirements weekmenuRequirements){
         if(weekmenuService.doesNextWeekmenuExist(ControllerHelpers.GetCurrentGroupId(userService))){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

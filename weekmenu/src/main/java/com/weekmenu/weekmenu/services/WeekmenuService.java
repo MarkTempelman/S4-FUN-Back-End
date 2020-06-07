@@ -31,6 +31,10 @@ public class WeekmenuService {
         return this.repo.findWeekmenusByGroupIdAndStartDate(id, date);
     }
 
+    public List<Weekmenu> getNextWeekmenusByGroupId(Integer id){
+        return this.repo.findWeekmenusByGroupIdAndStartDate(id, getNextMonday());
+    }
+
     public Weekmenu GenerateWeekmenu(WeekmenuRequirements requirements, List<Dish> dishes){
         Weekmenu weekmenu = new Weekmenu(dishes.get(0).getGroupId(), getNextMonday());
         Set<Dish> weekmenuDishes = new HashSet<>();

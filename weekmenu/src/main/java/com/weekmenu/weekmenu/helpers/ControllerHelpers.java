@@ -25,4 +25,13 @@ public class ControllerHelpers {
         unsortedList.sort(compareByDay);
         return new LinkedHashSet<>(unsortedList);
     }
+
+    public static List<Weekmenu> sortDishesInWeekmenus(List<Weekmenu> weekmenus){
+        weekmenus.forEach(weekmenu -> {
+            Set<WeekmenuDish> weekmenuDishes = weekmenu.getWeekmenuDishes();
+            weekmenuDishes = ControllerHelpers.sortWeekmenuDishesByDay(weekmenuDishes);
+            weekmenu.setWeekmenuDishes(weekmenuDishes);
+        });
+        return weekmenus;
+    }
 }
