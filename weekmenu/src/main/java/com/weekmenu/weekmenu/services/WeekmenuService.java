@@ -19,6 +19,13 @@ public class WeekmenuService {
         repo = repository;
     }
 
+    public Boolean doesNextWeekmenuExist(Integer groupId){
+        if(repo.howManyWeekmenusWithGroupIdAndStartDate(groupId, getNextMonday()) > 0){
+            return true;
+        }
+        return false;
+    }
+
     public List<Weekmenu> getCurrentWeekmenusByGroupId(Integer id){
         Date date = ServiceHelpers.getMondayFromLocalDate(LocalDate.now());
         return this.repo.findWeekmenusByGroupIdAndStartDate(id, date);
