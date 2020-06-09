@@ -14,9 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -41,9 +39,10 @@ public class DishController {
     public ResponseEntity<Dish> Get(@PathVariable Integer id) {
         try {
             Dish dish = service.get(id);
-            return new ResponseEntity<Dish>(dish, HttpStatus.OK);
+            dish.setIngredients(ControllerHelpers.removeDuplicateDishIngredients(dish.getIngredients()));
+            return new ResponseEntity<>(dish, HttpStatus.OK);
         } catch (NoSuchElementException e){
-            return new ResponseEntity<Dish>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
