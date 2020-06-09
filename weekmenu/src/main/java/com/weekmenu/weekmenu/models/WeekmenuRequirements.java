@@ -4,21 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeekmenuRequirements {
-    List<TagAmount> tags = new ArrayList<>();
-
-    public WeekmenuRequirements(List<TagAmount> tags) {
-        this.tags = tags;
-    }
+    List<WeekmenuRequirement> weekmenuRequirements = new ArrayList<>();
 
     public WeekmenuRequirements() {
         super();
     }
 
-    public List<TagAmount> getTags() {
-        return tags;
+    public List<WeekmenuRequirement> getWeekmenuRequirements() {
+        return weekmenuRequirements;
     }
 
-    public void setTags(List<TagAmount> tags) {
-        this.tags = tags;
+    public void setWeekmenuRequirements(List<WeekmenuRequirement> weekmenuRequirements) {
+        this.weekmenuRequirements = weekmenuRequirements;
     }
 }

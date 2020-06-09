@@ -42,7 +42,7 @@ public class WeekmenuController {
     }
 
     @PostMapping("/admin/weekmenu/create")
-    public ResponseEntity generateWeekmenu(@RequestBody List<WeekmenuRequirement> weekmenuRequirements){
+    public ResponseEntity generateWeekmenu(@RequestBody WeekmenuRequirements weekmenuRequirements){
         if(weekmenuService.doesNextWeekmenuExist(ControllerHelpers.GetCurrentGroupId(userService))){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

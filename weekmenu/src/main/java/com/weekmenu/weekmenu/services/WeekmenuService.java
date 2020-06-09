@@ -36,12 +36,12 @@ public class WeekmenuService {
     }
 
     // needs to be refactored
-    public Weekmenu GenerateWeekmenu(List<WeekmenuRequirement> requirements, List<Dish> dishes) {
+    public Weekmenu GenerateWeekmenu(WeekmenuRequirements requirements, List<Dish> dishes) {
         Weekmenu weekmenu = new Weekmenu(dishes.get(0).getGroupId(), getNextMonday());
         List<Dish> tempDishes;
         Set<Dish> weekmenuDishes = new HashSet<>();
 
-        for (WeekmenuRequirement requirement : requirements) {
+        for (WeekmenuRequirement requirement : requirements.getWeekmenuRequirements()) {
             if (requirement.getTag().getId() != null && requirement.getIngredient().getId() != null) {
                 tempDishes = getDishesByTagAndIngredient(requirement.getTag(), requirement.getIngredient(), dishes);
                 if (tempDishes.size() > 0) {
@@ -134,15 +134,16 @@ public class WeekmenuService {
 
     public List<Dish> getDishesByIngredient(List<Dish> dishes, Ingredient ingredient) {
         boolean doesDishContainIngredient;
-        for (Dish dish : dishes) {
+        for (Iterator<Dish> iterator = dishes.iterator(); iterator.hasNext();) {
+            Dish dish = iterator.next();
             doesDishContainIngredient = false;
             for (DishIngredient dishIngredient : dish.getIngredients()) {
-                if (dishIngredient.getIngredient() == ingredient) {
+                if (dishIngredient.getIngredient().getId() == ingredient.getId()) {
                     doesDishContainIngredient = true;
                 }
             }
             if (!doesDishContainIngredient) {
-                dishes.remove(dish);
+                iterator.remove();
             }
         }
         return dishes;
