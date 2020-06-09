@@ -1,9 +1,7 @@
 package com.weekmenu.weekmenu.models;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="ingredient")
@@ -60,6 +58,32 @@ public class Ingredient {
 
     public void setUnitOfMeasurement(String unitOfMeasurement) {
         this.unitOfMeasurement = unitOfMeasurement;
+    }
+
+    public Set<DishIngredient> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(Set<DishIngredient> dishes) {
+        this.dishes = dishes;
+    }
+
+    public void addDishIngredient(DishIngredient dishIngredient){
+        if(dishes.contains(dishIngredient))
+            return;
+
+        dishes.add(dishIngredient);
+
+        dishIngredient.setIngredient(this);
+    }
+
+    public void removeDishIngredient(DishIngredient dishIngredient){
+        if(!dishes.contains(dishIngredient))
+            return;
+
+        dishes.remove(dishIngredient);
+
+        dishIngredient.setIngredient(null);
     }
 
     @Override

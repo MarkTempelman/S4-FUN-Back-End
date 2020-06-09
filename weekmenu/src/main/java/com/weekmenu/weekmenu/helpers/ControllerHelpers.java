@@ -1,14 +1,17 @@
 package com.weekmenu.weekmenu.helpers;
 
-import com.weekmenu.weekmenu.models.User;
-import com.weekmenu.weekmenu.models.Weekmenu;
-import com.weekmenu.weekmenu.models.WeekmenuDish;
+import com.weekmenu.weekmenu.models.*;
 import com.weekmenu.weekmenu.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 
 public class ControllerHelpers {
+    @Autowired
+    EntityManager entityManager;
+
     public static User GetCurrentUser(UserService service){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         return service.Get(name);

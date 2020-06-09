@@ -55,6 +55,10 @@ public class Tag {
         this.tagName = tagName;
     }
 
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

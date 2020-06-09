@@ -35,7 +35,7 @@ public class Dish {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "dish")
     private Set<WeekmenuDish> weekmenuDishes = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name="tag_dish",
         joinColumns = {@JoinColumn(name = "dish_id")},
@@ -44,7 +44,7 @@ public class Dish {
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "dish", cascade = CascadeType.ALL)
-    private Set<DishIngredient> ingredients = new HashSet<>();
+    private List<DishIngredient> ingredients = new ArrayList<>();
 
     public Dish() {
     }
@@ -100,6 +100,18 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<DishIngredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<DishIngredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void addDishIngredient(DishIngredient dishIngredient){
+        ingredients.add(dishIngredient);
     }
 
     @Override

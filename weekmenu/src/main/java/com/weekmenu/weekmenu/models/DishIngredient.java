@@ -1,27 +1,39 @@
 package com.weekmenu.weekmenu.models;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "dish_ingredient")
-public class DishIngredient {
-    @EmbeddedId
-    private DishIngredientId id = new DishIngredientId();
+public class DishIngredient implements Serializable {
+//    @EmbeddedId
+//    private DishIngredientId id = new DishIngredientId();
 
+    @Id
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("dishId")
+//    @MapsId("dishId")
     @JoinColumn(name = "dish_id")
     private Dish dish;
 
+    @Id
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("ingredientId")
+//    @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     private Integer quantity;
 
     public DishIngredient() {
+    }
+
+    public DishIngredient(Dish dish, Ingredient ingredient, Integer quantity) {
+        this.dish = dish;
+        this.ingredient = ingredient;
+        this.quantity = quantity;
     }
 
     public void setDish(Dish dish) {
@@ -32,8 +44,22 @@ public class DishIngredient {
         return ingredient;
     }
 
+
     public void setIngredient(Ingredient ingredient) {
+        if(Objects.equals(this.ingredient, ingredient)){
+            return;
+        }
+
+        Ingredient oldIngredient = this.ingredient;
+
         this.ingredient = ingredient;
+        if(oldIngredient != null){
+            oldIngredient.removeDishIngredient(this);
+        }
+
+        if(this.ingredient != null){
+            this.ingredient.addDishIngredient(this);
+        }
     }
 
     public Integer getQuantity() {
@@ -55,6 +81,6 @@ public class DishIngredient {
 
     @Override
     public int hashCode(){
-        return Objects.hash(dish.getId(), ingredient.getId());
+        return Objects.hash(ingredient.getId());
     }
 }
