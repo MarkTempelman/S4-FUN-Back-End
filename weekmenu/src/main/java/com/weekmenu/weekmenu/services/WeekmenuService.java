@@ -42,7 +42,7 @@ public class WeekmenuService {
         Set<Dish> weekmenuDishes = new HashSet<>();
 
         for (WeekmenuRequirement requirement : requirements.getWeekmenuRequirements()) {
-            if (requirement.getTag().getId() != null && requirement.getIngredient().getId() != null) {
+            if (requirement.getTag().getId() > 0 && requirement.getIngredient().getId() > 0) {
                 tempDishes = getDishesByTagAndIngredient(requirement.getTag(), requirement.getIngredient(), dishes);
                 if (tempDishes.size() > 0) {
                     Dish dish = getRandomDishFromDishes(tempDishes);
@@ -71,7 +71,7 @@ public class WeekmenuService {
                         }
                     }
                 }
-            } else if (requirement.getTag().getId() != null && requirement.getIngredient().getId() == null){
+            } else if (requirement.getTag().getId() > 0 && requirement.getIngredient().getId() <= 0){
                 tempDishes = getDishesByTag(dishes, requirement.getTag());
                 if (tempDishes.size() > 0) {
                     Dish dish = getRandomDishFromDishes(tempDishes);
@@ -84,7 +84,7 @@ public class WeekmenuService {
                     dishes.remove(dish);
                     tempDishes.clear();
                 }
-            } else if (requirement.getTag().getId() != null && requirement.getIngredient().getId() == null){
+            } else if (requirement.getTag().getId() <= 0 && requirement.getIngredient().getId() > 0){
                 tempDishes = getDishesByIngredient(dishes, requirement.getIngredient());
                 if (tempDishes.size() > 0) {
                     Dish dish = getRandomDishFromDishes(tempDishes);
