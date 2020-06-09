@@ -49,27 +49,15 @@ public class WeekmenuService {
                         addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                     } else {
                         tempDishes = getDishesByTag(dishes, requirement.getTag());
-                        if (tempDishes.size() > 0) {
-                            addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
-                        } else {
-                            addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
-                        }
+                        addRandomFromTempDishesOrDishes(weekmenuDishes, dishes, tempDishes);
                     }
                 }
-            } else if (requirement.getTag().getId() > 0 && requirement.getIngredient().getId() <= 0){
+            } else if (requirement.getTag().getId() > 0){
                 tempDishes = getDishesByTag(dishes, requirement.getTag());
-                if (tempDishes.size() > 0) {
-                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
-                } else {
-                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
-                }
-            } else if (requirement.getTag().getId() <= 0 && requirement.getIngredient().getId() > 0){
+                addRandomFromTempDishesOrDishes(weekmenuDishes, dishes, tempDishes);
+            } else if (requirement.getIngredient().getId() > 0){
                 tempDishes = getDishesByIngredient(dishes, requirement.getIngredient());
-                if (tempDishes.size() > 0) {
-                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
-                } else {
-                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
-                }
+                addRandomFromTempDishesOrDishes(weekmenuDishes, dishes, tempDishes);
             }
             else {
                 addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
@@ -78,10 +66,18 @@ public class WeekmenuService {
         return addDishesToWeekmenu(weekmenu, weekmenuDishes);
     }
 
-    public void addRandomDishToWeekmenuDishes(Set<Dish> weekmenuDishes, List<Dish> dishes, List<Dish> tempDishes){
+    private void addRandomDishToWeekmenuDishes(Set<Dish> weekmenuDishes, List<Dish> dishes, List<Dish> tempDishes){
         Dish dish = getRandomDishFromDishes(tempDishes);
         weekmenuDishes.add(dish);
         dishes.remove(dish);
+    }
+
+    private void addRandomFromTempDishesOrDishes(Set<Dish> weekmenuDishes, List<Dish> dishes, List<Dish> tempDishes){
+        if (tempDishes.size() > 0) {
+            addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
+            return;
+        }
+        addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
     }
 
     public void SaveWeekmenu(Weekmenu weekmenu) {
