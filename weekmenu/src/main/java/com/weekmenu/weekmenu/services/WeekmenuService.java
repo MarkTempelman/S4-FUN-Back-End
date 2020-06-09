@@ -20,10 +20,7 @@ public class WeekmenuService {
     }
 
     public Boolean doesNextWeekmenuExist(Integer groupId) {
-        if (repo.howManyWeekmenusWithGroupIdAndStartDate(groupId, getNextMonday()) > 0) {
-            return true;
-        }
-        return false;
+        return repo.howManyWeekmenusWithGroupIdAndStartDate(groupId, getNextMonday()) > 0;
     }
 
     public List<Weekmenu> getCurrentWeekmenusByGroupId(Integer id) {
@@ -45,68 +42,47 @@ public class WeekmenuService {
             if (requirement.getTag().getId() > 0 && requirement.getIngredient().getId() > 0) {
                 tempDishes = getDishesByTagAndIngredient(requirement.getTag(), requirement.getIngredient(), dishes);
                 if (tempDishes.size() > 0) {
-                    Dish dish = getRandomDishFromDishes(tempDishes);
-                    weekmenuDishes.add(dish);
-                    dishes.remove(dish);
-                    tempDishes.clear();
+                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                 } else {
                     tempDishes = getDishesByIngredient(dishes, requirement.getIngredient());
                     if (tempDishes.size() > 0) {
-                        Dish dish = getRandomDishFromDishes(tempDishes);
-                        weekmenuDishes.add(dish);
-                        dishes.remove(dish);
-                        tempDishes.clear();
+                        addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                     } else {
                         tempDishes = getDishesByTag(dishes, requirement.getTag());
                         if (tempDishes.size() > 0) {
-                            Dish dish = getRandomDishFromDishes(tempDishes);
-                            weekmenuDishes.add(dish);
-                            dishes.remove(dish);
-                            tempDishes.clear();
+                            addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                         } else {
-                            Dish dish = getRandomDishFromDishes(dishes);
-                            weekmenuDishes.add(dish);
-                            dishes.remove(dish);
-                            tempDishes.clear();
+                            addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
                         }
                     }
                 }
             } else if (requirement.getTag().getId() > 0 && requirement.getIngredient().getId() <= 0){
                 tempDishes = getDishesByTag(dishes, requirement.getTag());
                 if (tempDishes.size() > 0) {
-                    Dish dish = getRandomDishFromDishes(tempDishes);
-                    weekmenuDishes.add(dish);
-                    dishes.remove(dish);
-                    tempDishes.clear();
+                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                 } else {
-                    Dish dish = getRandomDishFromDishes(dishes);
-                    weekmenuDishes.add(dish);
-                    dishes.remove(dish);
-                    tempDishes.clear();
+                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
                 }
             } else if (requirement.getTag().getId() <= 0 && requirement.getIngredient().getId() > 0){
                 tempDishes = getDishesByIngredient(dishes, requirement.getIngredient());
                 if (tempDishes.size() > 0) {
-                    Dish dish = getRandomDishFromDishes(tempDishes);
-                    weekmenuDishes.add(dish);
-                    dishes.remove(dish);
-                    tempDishes.clear();
+                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, tempDishes);
                 } else {
-                    Dish dish = getRandomDishFromDishes(dishes);
-                    weekmenuDishes.add(dish);
-                    dishes.remove(dish);
-                    tempDishes.clear();
+                    addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
                 }
             }
             else {
-                Dish dish = getRandomDishFromDishes(dishes);
-                weekmenuDishes.add(dish);
-                dishes.remove(dish);
+                addRandomDishToWeekmenuDishes(weekmenuDishes, dishes, dishes);
             }
         }
         return addDishesToWeekmenu(weekmenu, weekmenuDishes);
     }
 
+    public void addRandomDishToWeekmenuDishes(Set<Dish> weekmenuDishes, List<Dish> dishes, List<Dish> tempDishes){
+        Dish dish = getRandomDishFromDishes(tempDishes);
+        weekmenuDishes.add(dish);
+        dishes.remove(dish);
+    }
 
     public void SaveWeekmenu(Weekmenu weekmenu) {
         repo.save(weekmenu);
@@ -140,6 +116,7 @@ public class WeekmenuService {
             for (DishIngredient dishIngredient : dish.getIngredients()) {
                 if (dishIngredient.getIngredient().getId() == ingredient.getId()) {
                     doesDishContainIngredient = true;
+                    break;
                 }
             }
             if (!doesDishContainIngredient) {

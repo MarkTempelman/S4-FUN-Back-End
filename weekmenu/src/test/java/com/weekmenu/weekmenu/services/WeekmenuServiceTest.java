@@ -64,8 +64,6 @@ class WeekmenuServiceTest {
         dishes.add(dish6);
         dishes.add(dish7);
 
-
-
         //act
         dishes = weekmenuService.getDishesByTag(dishes, tag1);
 
