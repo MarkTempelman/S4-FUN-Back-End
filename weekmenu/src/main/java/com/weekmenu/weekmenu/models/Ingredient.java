@@ -60,9 +60,9 @@ public class Ingredient {
         this.unitOfMeasurement = unitOfMeasurement;
     }
 
-    public Set<DishIngredient> getDishes() {
-        return dishes;
-    }
+//    public Set<DishIngredient> getDishes() {
+//        return dishes;
+//    }
 
     public void setDishes(Set<DishIngredient> dishes) {
         this.dishes = dishes;
