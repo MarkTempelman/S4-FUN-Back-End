@@ -3,6 +3,7 @@ package com.weekmenu.weekmenu.controllers;
 import com.weekmenu.weekmenu.helpers.ControllerHelpers;
 import com.weekmenu.weekmenu.models.Weekmenu;
 import com.weekmenu.weekmenu.models.WeekmenuDish;
+import com.weekmenu.weekmenu.models.WeekmenuRequirement;
 import com.weekmenu.weekmenu.models.WeekmenuRequirements;
 import com.weekmenu.weekmenu.services.DishService;
 import com.weekmenu.weekmenu.services.UserService;
@@ -41,7 +42,7 @@ public class WeekmenuController {
     }
 
     @PostMapping("/admin/weekmenu/create")
-    public ResponseEntity generateWeekmenu(@RequestBody WeekmenuRequirements weekmenuRequirements){
+    public ResponseEntity generateWeekmenu(@RequestBody List<WeekmenuRequirement> weekmenuRequirements){
         if(weekmenuService.doesNextWeekmenuExist(ControllerHelpers.GetCurrentGroupId(userService))){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
