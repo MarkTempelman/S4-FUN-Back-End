@@ -36,11 +36,13 @@ public class DishController {
     }
 
     @GetMapping("/member/dishes/{id}")
-    public ResponseEntity<Dish> Get(@PathVariable Integer id) {
+    public ResponseEntity<Dish[]> getDishById(@PathVariable Integer id) {
         try {
             Dish dish = service.get(id);
             dish.setIngredients(ControllerHelpers.removeDuplicateDishIngredients(dish.getIngredients()));
-            return new ResponseEntity<>(dish, HttpStatus.OK);
+            List<Dish> dishes = new ArrayList<>();
+            dishes.add(dish);
+            return new ResponseEntity(dishes, HttpStatus.OK);
         } catch (NoSuchElementException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
